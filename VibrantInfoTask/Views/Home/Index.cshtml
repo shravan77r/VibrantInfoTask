@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="main-content">
+    <div class="header-area">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Address List</h4>
+                <div class="btn-group-area">
+                    <form class="mainsearch-form" novalidate="novalidate">
+                        <div class="input-group" style="width:70%">
+                            <input type="text" id="search" class="form-control" placeholder="Search by Name, Email, Phone number, Address">
+                        </div>
+                    </form>
+                    <a href="/Home/AddNew" class="btn btn-primary">Add New</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table id="tblMain" class="table table-bordered table-striped" role="grid">
+                    <thead>
+                        <tr role="row">
+                            <th>
+                                <input type="checkbox" id="allCheckBox" onclick="return initializeAllCheckBox();" name="allCheckBox">
+                            </th>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
