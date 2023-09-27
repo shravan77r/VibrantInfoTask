@@ -107,7 +107,7 @@ namespace VibrantInfoTask.Controllers
         }
 
         #region Add/Update
-        public IActionResult Addnew(int Id)
+        public IActionResult AddNew(int Id)
         {
             var objUser = new User();
             if (Id > 0)
@@ -140,7 +140,7 @@ namespace VibrantInfoTask.Controllers
             return View(objUser);
         }
         [HttpPost]
-        public IActionResult Addnew(User obj)
+        public IActionResult AddNew(User obj)
         {
             try
             {
@@ -158,31 +158,56 @@ namespace VibrantInfoTask.Controllers
 
                 if (result > 0)
                 {
-                    try
-                    {
-                        if (obj.ProfilePhoto != null)
-                        {
-                            string path = Path.Combine(this.Environment.WebRootPath, "Uploads/" + result);
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-                            string fileName = Path.GetFileName(obj.Photo.FileName);
-                            using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
-                            {
-                                obj.Photo.CopyTo(stream);
-                            }
-                        }
-
-                    }
-                    catch (Exception)
-                    {
-
-                    }
                     if (obj.OperationType == "UPDATE")
+                    {
+                        try
+                        {
+                            if (obj.Photo != null)
+                            {
+                                string path = Path.Combine(this.Environment.WebRootPath, "Uploads/" + result);
+                                if (!Directory.Exists(path))
+                                {
+                                    Directory.CreateDirectory(path);
+                                }
+                                string fileName = Path.GetFileName(obj.Photo.FileName);
+                                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                                {
+                                    obj.Photo.CopyTo(stream);
+                                }
+                            }
+
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                         TempData["Message"] = "User Updated successfully.";
+                    }
                     else
+                    {
+                        try
+                        {
+                            if (obj.Photo != null)
+                            {
+                                string path = Path.Combine(this.Environment.WebRootPath, "Uploads/" + result);
+                                if (!Directory.Exists(path))
+                                {
+                                    Directory.CreateDirectory(path);
+                                }
+                                string fileName = Path.GetFileName(obj.Photo.FileName);
+                                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                                {
+                                    obj.Photo.CopyTo(stream);
+                                }
+                            }
+
+                        }
+                        catch (Exception)
+                        {
+
+                        }
                         TempData["Message"] = "User Added successfully.";
+                    }
                 }
                 else
                 {
@@ -197,7 +222,7 @@ namespace VibrantInfoTask.Controllers
             return RedirectToAction("Index", "Home");
         }
         [HttpGet]
-        public async Task<JsonResult> Delete(string id)
+        public JsonResult Delete(string id)
         {
             try
             {
@@ -227,25 +252,70 @@ namespace VibrantInfoTask.Controllers
             }
             return Json(new { message = "Record Deleted" });
         }
-
-        [HttpPost]
-        public JsonResult IsEmailExist(int id, string email)
+        [HttpGet]
+        public IActionResult ChangeStatus(string id, int Status)
         {
-            string _query = "select * from Addressbook where Email='" + email + "'";
-            var result = _dbContext.Getdata(_query);
-            var res = result.Rows.Count > 0;
-            return Json(!res);
-        }
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    if (Convert.ToInt32(id) > 0)
+                    {
+                        var obj = new User();
+                        obj.OperationType = "ChangeStatus";
+                        obj.IsActive = Convert.ToBoolean(Status);
+                        obj.Id = Convert.ToInt32(id);
+                        var result = _dbContext.INSERT_UPDATE_DELETE(obj);
 
-        [HttpPost]
-        public JsonResult IsPhoneNumberExist(int id, string PhoneNumber)
+                        if (result > 0)
+                        {
+                            TempData["Message"] = "Status changed successfully";
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Status not changeg";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = "Internal server error";
+            }
+            return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        public IActionResult BlockOrUnblock(string id, int Status)
         {
-            string _query = "select * from Addressbook where PhoneNumber='" + PhoneNumber + "'";
-            var result = _dbContext.Getdata(_query);
-            var res = result.Rows.Count > 0;
-            return Json(!res);
-        }
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    if (Convert.ToInt32(id) > 0)
+                    {
+                        var obj = new User();
+                        obj.OperationType = "BlockOrUnblock";
+                        obj.IsBlock = Convert.ToBoolean(Status);
+                        obj.Id = Convert.ToInt32(id);
+                        var result = _dbContext.INSERT_UPDATE_DELETE(obj);
 
+                        if (result > 0)
+                        {
+                            TempData["Message"] = "Status changed successfully";
+                        }
+                        else
+                        {
+                            TempData["Message"] = "Status not changeg";
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Message"] = "Internal server error";
+            }
+            return RedirectToAction("Index", "Home");
+        }
         #endregion Add/Update
 
         #region ChangePassword

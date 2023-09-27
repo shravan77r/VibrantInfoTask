@@ -51,6 +51,8 @@ namespace VibrantInfoTask.Data
                 com.Parameters.AddWithValue("@BloodGroup", obj.BloodGroup);
                 com.Parameters.AddWithValue("@ProfilePhoto", obj.ProfilePhoto);
                 com.Parameters.AddWithValue("@Address", obj.Address);
+                com.Parameters.AddWithValue("@IsActive", obj.IsActive);
+                com.Parameters.AddWithValue("@IsBlock", obj.IsBlock);
                 com.Parameters.AddWithValue("@OperationType", obj.OperationType);
 
                 SqlParameter insertedId = new SqlParameter("@InsertedId", SqlDbType.Int);

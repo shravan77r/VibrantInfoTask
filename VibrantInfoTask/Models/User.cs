@@ -20,7 +20,7 @@ namespace VibrantInfoTask.Models
 
         [Required(ErrorMessage = "Please Enter Email address.")]
         [EmailAddress(ErrorMessage = "Invalid email address.")]
-        [Remote("IsEmailExist", "Account", HttpMethod = "POST", ErrorMessage = "Email address already exists.")]
+        [Remote("IsEmailExist", "Account", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Email address already exists.")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please Enter Password.")]
@@ -28,7 +28,7 @@ namespace VibrantInfoTask.Models
         public string Password { get; set; }
 
         [Required(ErrorMessage = "Please Enter Phone Number.")]
-        [Remote("IsPhoneNumberExist", "Account", HttpMethod = "POST", ErrorMessage = "Phone Number already exists.")]
+        [Remote("IsPhoneNumberExist", "Account", AdditionalFields = "Id", HttpMethod = "POST", ErrorMessage = "Phone Number already exists.")]
         public string PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Please Select Gender.")]

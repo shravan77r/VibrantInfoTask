@@ -1,19 +1,20 @@
 ﻿@model VibrantInfoTask.Models.User
 
 @{
-    ViewData["Title"] = "Sign Up";
-    Layout = "_LayoutLogin";
+    ViewData["Title"] = "User";
 }
 
-<h1>Sign Up</h1>
+<h1>User</h1>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="SignUp" enctype="multipart/form-data">
+        <form asp-action="AddNew" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
+                        <input asp-for="Id" type="hidden" id="Id" />
+                        <input asp-for="ProfilePhoto" type="hidden" id="ProfilePhoto" />
                         <label asp-for="FirstName" class="control-label">First Name*:</label>
                         <input asp-for="FirstName" class="form-control" id="FirstName" />
                         <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -46,26 +47,19 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label asp-for="Password" class="control-label">Password*:</label>
-                        <input type="password" asp-for="Password" class="form-control" />
+                        <input type="text" asp-for="Password" class="form-control" />
                         <span asp-validation-for="Password" id="Password" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="ConfirmPassowrd" class="control-label">Confirm Passowrd*:</label>
-                        <input type="Password" id="ConfirmPassowrd" class="form-control" />
-                        <span asp-validation-for="Password" id="ConfirmPasswordErrorMessage" class="text-danger"></span>
+                        <label asp-for="PhoneNumber" class="control-label">Phone Number*:</label>
+                        <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber" maxlength="10" minlength="10" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber" class="control-label">Phone Number*:</label>
-                        <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber" maxlength="10" minlength="10"/>
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-                    </div>
-                </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label for="Gender">Gender*:</label>
@@ -83,14 +77,6 @@
                         <span asp-validation-for="BloodGroup" class="text-danger"></span>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="Photo">Profile Photo:</label>
-                        <input type="file" class="form-control-file" id="Photo" name="Photo">
-                    </div>
-                </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label asp-for="Address">Address*:</label>
@@ -99,14 +85,39 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary">Signup</button>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="Photo">Profile Photo:</label>
+                        <input type="file" class="form-control-file" id="Photo" name="Photo">
+                    </div>
+                </div>
+                
+                <div class="col-md-2">
+                    <div class="form-group frmchk">
+                        <label class="pr-10" asp-for="IsActive">Is Active</label>
+                        <label class="switch switch-primary mr-2">
+                            <input asp-for="IsActive" id="IsActive" name="IsActive" type="checkbox">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group frmchk">
+                        <label class="pr-10" asp-for="IsBlock">Is Block</label>
+                        <label class="switch switch-primary mr-2">
+                            <input asp-for="IsBlock" id="IsBlock" name="IsBlock" type="checkbox">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
         </form>
 
     </div>
 </div>
 
-<div>
-    Already have an account? <a asp-action="Login">Login</a>
+<div style="margin-top:20px;">
+    Back to <a asp-action="Index">List</a>
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

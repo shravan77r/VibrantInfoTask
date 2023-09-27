@@ -80,6 +80,8 @@ namespace VibrantInfoTask.Controllers
             try
             {
                 obj.OperationType = "INSERT";
+                obj.IsActive = true;
+                obj.IsBlock = false;
                 if (obj.Photo != null)
                 {
                     obj.ProfilePhoto = obj.Photo.FileName;
@@ -127,18 +129,18 @@ namespace VibrantInfoTask.Controllers
 
 
         [HttpPost]
-        public JsonResult IsEmailExist(string email)
+        public JsonResult IsEmailExist(string email, int Id)
         {
-            string _query = "select * from Addressbook where Email='" + email + "'";
+            string _query = "select * from Addressbook where Email='" + email + "' and Id !=" + Id;
             var result = _dbContext.Getdata(_query);
             var res = result.Rows.Count > 0;
             return Json(!res);
         }
 
         [HttpPost]
-        public JsonResult IsPhoneNumberExist(string PhoneNumber)
+        public JsonResult IsPhoneNumberExist(string PhoneNumber, int Id)
         {
-            string _query = "select * from Addressbook where PhoneNumber='" + PhoneNumber + "'";
+            string _query = "select * from Addressbook where PhoneNumber='" + PhoneNumber + "' and Id !=" + Id;
             var result = _dbContext.Getdata(_query);
             var res = result.Rows.Count > 0;
             return Json(!res);

@@ -28,7 +28,7 @@ function BindList() {
         "columns": [
             {
                 mRender: function (data, type, full) {
-                    return '<input type="checkbox" class="singleCheckBox" onclick="return initializeSingleCheckBox(this);" id="' + full.Id + '" name="HiddenId" value="id_' + full.Id + '" />';
+                    return '<input type="checkbox" class="singleCheckBox" onclick="return initializeSingleCheckBox(this);" id="' + full.id + '" name="HiddenId" value="id_' + full.id + '" />';
                 }
             },
             { "data": "id", "autoWidth": true },
@@ -40,25 +40,37 @@ function BindList() {
                 mRender: function (data, type, full) {
                     var str = '';
                     if (full.isActive) {
-                        str += '<span style="background-color:green;color:white">Active</span> ';
+                        str += '<a href="/Home/ChangeStatus?Id=' + full.id + '&&Status=0" class="btn btn-danger gridbtn">Deactivate</a>';
                     }
                     else {
-                        str += '<span style="background-color:red;color:white">Inactive</span> ';
+                        str += '<a href="/Home/ChangeStatus?Id=' + full.id + '&&Status=1" class="btn btn-success gridbtn">Activate</a>';
                     }
                     return str;
                 }
             },
             {
                 mRender: function (data, type, full) {
-                    var Action = '<div class="row" style="margin-left:-2px;"><a href="Home/Addnew?Id=' + full.Id + '" title="Edit" class="btn btn-primary btn-sm">Edit</a>&nbsp; ';
-                    Action += '<button class="btn btn-danger btn-sm sweet-1" onclick="fnDelete(\'' + full.Id + '\')">Delete</button></div>';
+                    var str = '';
+                    if (full.isBlock) {
+                        str += '<a href="/Home/BlockOrUnblock?Id=' + full.id + '&&Status=0" class="btn btn-success gridbtn">Unblock</a>';
+                    }
+                    else {
+                        str += '<a href="/Home/BlockOrUnblock?Id=' + full.id + '&&Status=1" class="btn btn-danger gridbtn">Block</a>';
+                    }
+                    return str;
+                }
+            },
+            {
+                mRender: function (data, type, full) {
+                    var Action = '<div class="row" style="margin-left:-2px;"><a href="/Home/AddNew?Id=' + full.id + '" title="Edit" class="btn btn-primary btn-sm">Edit</a>&nbsp; ';
+                    Action += '<button class="btn btn-danger btn-sm sweet-1" onclick="fnDelete(\'' + full.id + '\')">Delete</button></div>';
                     return Action;
                 }
             }
         ],
         "responsive": true,
         "columnDefs": [
-            { orderable: false, "targets": [0, 1, 2, 3, 4, 5, 6] }
+            { orderable: false, "targets": [0, 1, 2, 3, 4, 5, 6, 7, 8] }
         ]
     });
 
